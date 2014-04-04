@@ -124,7 +124,13 @@ article.cd, article.cdbroken {
   opacity: 0.95;
 }
 
-cdbroken
+article.facepalm::before {
+  -webkit-filter: none;
+  -moz-filter: none;
+  filter: none;
+  background-image: url("../img/facepalm.gif");
+}
+
 
 article.to-the-resque::before {
   -webkit-filter: blur(2.25px) grayscale(0.3) brightness(0.4);
