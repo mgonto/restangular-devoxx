@@ -51,36 +51,36 @@ pre[data-line] {
 
 /* ---- backgrounds ---- */
 article.start::before {
-  -webkit-filter: blur(0.5px) grayscale(0.3) brightness(0.4);
-  -moz-filter: blur(0.5px) grayscale(0.3) brightness(0.4);
-  filter: blur(0.5px) grayscale(0.3) brightness(0.4);
+  -webkit-filter: blur(2.25px) grayscale(0.3) brightness(0.4);
+  -moz-filter: blur(2.25px) grayscale(0.3) brightness(0.4);
+  filter: blur(2.25px) grayscale(0.3) brightness(0.4);
   background-image: url("../img/zen.jpg");
 }
 
 article.developer::before {
-  -webkit-filter: blur(0.5px) grayscale(0.3) brightness(0.2);
-  -moz-filter: blur(0.5px) grayscale(0.3) brightness(0.2);
-  filter: blur(0.5px) grayscale(0.3) brightness(0.2);
+  -webkit-filter: blur(2.25px) grayscale(0.3) brightness(0.2);
+  -moz-filter: blur(2.25px) grayscale(0.3) brightness(0.2);
+  filter: blur(2.25px) grayscale(0.3) brightness(0.2);
   background-image: url("../img/bartnerd.png");
   background-position: top;
 }
 
 article.steamclock::before {
-  -webkit-filter: blur(1px) grayscale(0.3) brightness(0.4);
-  -moz-filter: blur(1px) grayscale(0.3) brightness(0.4);
-  filter: blur(1px) grayscale(0.3) brightness(0.4);
+  -webkit-filter: blur(5.5px) grayscale(0.3) brightness(0.4);
+  -moz-filter: blur(5.5px) grayscale(0.3) brightness(0.4);
+  filter: blur(5.5px) grayscale(0.3) brightness(0.4);
   background-image: url("../img/steamclock.jpg");
 }
 
 article.js::before {
-  -webkit-filter: blur(0.5px) grayscale(0.3) brightness(0.4);
-  -moz-filter: blur(0.5px) grayscale(0.3) brightness(0.4);
-  filter: blur(0.5px) grayscale(0.3) brightness(0.4);
+  -webkit-filter: blur(2.25px) grayscale(0.3) brightness(0.4);
+  -moz-filter: blur(2.25px) grayscale(0.3) brightness(0.4);
+  filter: blur(2.25px) grayscale(0.3) brightness(0.4);
   background-image: url("../img/js.png");
 }
 
 article.longtimeago::before {
-  -webkit-filter: grayscale(0) brightness(1);
+  -webkit-filter: blur(0) grayscale(0) brightness(5.5);
   -moz-filter: grayscale(0) brightness(1);
   filter: grayscale(0) brightness(1);
   background-image: url("../img/longtimeago.png");
@@ -127,9 +127,9 @@ article.cd, article.cdbroken {
 cdbroken
 
 article.to-the-resque::before {
-  -webkit-filter: blur(0.5px) grayscale(0.3) brightness(0.4);
-  -moz-filter: blur(0.5px) grayscale(0.3) brightness(0.4);
-  filter: blur(0.5px) grayscale(0.3) brightness(0.4);
+  -webkit-filter: blur(2.25px) grayscale(0.3) brightness(0.4);
+  -moz-filter: blur(2.25px) grayscale(0.3) brightness(0.4);
+  filter: blur(2.25px) grayscale(0.3) brightness(0.4);
   background-image: url("../img/superman.jpg");
   background-position: top;
 }
