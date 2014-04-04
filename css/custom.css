@@ -111,10 +111,20 @@ article.cd::before {
   background-size: contain;
 }
 
-article.cd {
+article.cdbroken::before {
+  -webkit-filter: none;
+  -moz-filter: none;
+  filter: none;
+  background-image: url("../img/cdbroken.png");
+  background-size: contain;
+}
+
+article.cd, article.cdbroken {
   background-color: white;
   opacity: 0.95;
 }
+
+cdbroken
 
 article.to-the-resque::before {
   -webkit-filter: blur(0.5px) grayscale(0.3) brightness(0.4);

@@ -156,43 +156,6 @@
       
       <section>
         <div class="content">
-          <h2>There're no models</h2>
-        </div>
-      </section>
-      
-      <section>
-        <div class="content">
-          <div class="byline">
-            <div class="classy">
-              we need a
-            </div>
-          </div>
-          <h3>centralized point</h3>
-          <div class="byline">
-            <div class="classy">
-              to access the information
-            </div>
-          </div>
-        </div>
-        </div>
-      </section>
-      
-      <section data-bespoke-state="to-the-resque">
-        <div class="content">
-          <div class="byline">
-            <div class="classy">
-              Look, it's SOAP. 
-              No, it's Remoting. 
-              No, it's
-            </div>
-          </div>
-          <h1><strong>REST-MAN</strong></h1>
-          <div class="unbrokenline"></div>
-        </div>
-      </section>
-      
-      <section>
-        <div class="content">
           <h2>AngularJS has $resource for this</h2>
         </div>
       </section>
@@ -315,13 +278,7 @@ var user = User.get({userId:123}, function() {
       
       <section data-bespoke-state="notcool">
         <div class="content">
-          <h2>We need to create one Resource object per entity</h2>
-        </div>
-      </section>
-      
-      <section data-bespoke-state="notcool">
-        <div class="content">
-          <h2>It doesn't handle relationship between data</h2>
+          <h2>$resource thinks models aren't related</h2>
         </div>
       </section>
       
@@ -333,20 +290,31 @@ var user = User.get({userId:123}, function() {
       
       <section data-bespoke-state="notcool">
         <div class="content">
-          <h2>We can't use element's own href</h2>
-        </div>
-      </section>
-      
-      <section data-bespoke-state="notcool">
-        <div class="content">
           <h2>We can't add configurations per resource agroupation</h2>
         </div>
       </section>
-      
-      <section data-bespoke-state="notcool-joey">
+
+      <section data-bespoke-state="cd">
+        <div class="content">
+        <!--
+        [User]<>-*>[Car]
+        [Car]<>-*>[Mechanic]
+        [Mechanic]<>-*>[Providers]
+        [User]<>-*>[Profile]
+        [Profile]<>-*>[Role]
+        [Mechanic]<>-1>[Boss]
+        [User|+name;+age;+phone]
+        [Car|+make;+model;+year;+maxFuel;+currentFuel;]
+        -->
+        </div>
+      </section>
+
+      <section data-bespoke-state="cdbroken">
         <div class="content">
         </div>
       </section>
+      
+      
       
       <section data-bespoke-state="bat-signal">
         <div class="content">
