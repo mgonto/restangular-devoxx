@@ -103,7 +103,18 @@ article.kungfu::before {
   background-position: 50% 50%;
 }
 
+article.cd::before {
+  -webkit-filter: none;
+  -moz-filter: none;
+  filter: none;
+  background-image: url("../img/classdiagram.png");
+  background-size: contain;
+}
 
+article.cd {
+  background-color: white;
+  opacity: 0.95;
+}
 
 article.to-the-resque::before {
   -webkit-filter: blur(0.5px) grayscale(0.3) brightness(0.4);
