@@ -80,7 +80,7 @@ article.js::before {
 }
 
 article.longtimeago::before {
-  -webkit-filter: blur(0) grayscale(0) brightness(5.5);
+  -webkit-filter: grayscale(0) brightness(1);
   -moz-filter: grayscale(0) brightness(1);
   filter: grayscale(0) brightness(1);
   background-image: url("../img/longtimeago.png");
