@@ -3,6 +3,10 @@
   background-color: #142444;
 }
 
+article section.content .black-text {
+  font-color: black;
+}
+
 .livecode input {
   background: #142444;
   border: none;
@@ -131,15 +135,19 @@ article.facepalm::before {
   background-image: url("../img/facepalm.gif");
 }
 
-
-article.to-the-resque::before {
-  -webkit-filter: blur(2.25px) grayscale(0.3) brightness(0.4);
-  -moz-filter: blur(2.25px) grayscale(0.3) brightness(0.4);
-  filter: blur(2.25px) grayscale(0.3) brightness(0.4);
-  background-image: url("../img/superman.jpg");
-  background-position: top;
+article.spoiler::before {
+  -webkit-filter: none;
+  -moz-filter: none;
+  filter: none;
+  background-image: url("../img/spoiler.gif");
 }
 
+article.bond::before {
+  -webkit-filter: none;
+  -moz-filter: none;
+  filter: none;
+  background-image: url("../img/bond.gif");
+}
 
 
 article.notcool::before {
@@ -148,15 +156,6 @@ article.notcool::before {
   filter: blur(1px) grayscale(0.3) brightness(0.1);
   background-image: url("../img/notcool.jpg");
 }
-
-article.notcool-gif::before {
-  -webkit-filter: grayscale(0) brightness(1);
-  -moz-filter: grayscale(0) brightness(1);
-  filter: grayscale(0) brightness(1);
-  background-image: url("../img/notcool.gif");
-  background-size: 92% 100%;
-}
-
 
 article.bat-signal::before {
   -webkit-filter: blur(1px) grayscale(0.3) brightness(0.4);

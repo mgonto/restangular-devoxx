@@ -272,11 +272,6 @@ var user = User.get({userId:123}, function() {
         </div>
       </section>
       
-      <section data-bespoke-state="notcool-joey">
-        <div class="content">
-        </div>
-      </section>
-      
       <section data-bespoke-state="notcool">
         <div class="content">
           <h2>$resource thinks models aren't related</h2>
@@ -295,9 +290,15 @@ var user = User.get({userId:123}, function() {
         </div>
       </section>
 
-      <section data-bespoke-state="cd">
+      <section data-bespoke-state="notcool-joey">
         <div class="content">
-        <h2>This is what I needed</h2>
+        </div>
+      </section>
+
+      <section>
+        <div class="content">
+          <h2 class="black-text">This is what I needed</h2>
+          <img src="img/classdiagram.png" />
         <!--
         [User]<>-*>[Car]
         [Car]<>-*>[Mechanic]
@@ -311,9 +312,10 @@ var user = User.get({userId:123}, function() {
         </div>
       </section>
 
-      <section data-bespoke-state="cdbroken">
+      <section>
         <div class="content">
-        <h2>This is what $resource thought</h2>
+          <h2 class="black-text">This is what I got</h2>
+          <img src="img/cdbroken.png" />
         </div>
       </section>
 
@@ -482,6 +484,218 @@ Restangular.one('users', 123).all('cars').getList();
 $scope.user.all('cars').getList();</code></pre>
         </div>
       </section>
+
+      <section>
+        <div class="content">
+          <div class="byline">
+            <div class="classy">
+              Now, we have all of our
+            </div>
+          </div>
+          <h3>Models</h3>
+          <div class="byline">
+            <div class="classy">
+              and their
+            </div>
+          </div>
+          <h3>Data</h3>
+          <div class="byline">
+            <div class="classy">
+              but what about
+            </div>
+          </div>
+          <h3>Adding behaviour?</h3>
+          <div class="byline" />
+        </div>
+      </section>
+
+      <section data-bespoke-state="code long">
+        <div class="content nofade">
+          <p>I saw tutorials doing:</p>
+          <!-- <div>
+  <input type="button" ng-click="goTo(car, china)" value="click here to use your car"/> 
+  <input type="text" ng-model="amount" placeholder="Fuel to charge" /><input type="button" ng-click="chargeFuel(car, amount)" value="Click here to charge fuel" />
+</div> -->
+          <pre data-line="2, 6"><code class="language-markup">&lt;div&gt;
+  &lt;input type=&quot;button&quot; ng-click=&quot;goTo(car, china)&quot; value=&quot;Go to China&quot;/&gt; 
+  
+  &lt;input type=&quot;text&quot; ng-model=&quot;amount&quot; placeholder=&quot;Fuel to charge&quot; /&gt;
+
+  &lt;input type=&quot;button&quot; ng-click=&quot;chargeFuel(car, amount)&quot; value=&quot;Charge fuel&quot; /&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </section>
+
+      <section data-bespoke-state="code long">
+        <div class="content nofade">
+          <p>This is what I propose</p>
+          <!-- <div>
+  <input type="button" ng-click="goTo(car, china)" value="click here to use your car"/> 
+  <input type="text" ng-model="amount" placeholder="Fuel to charge" /><input type="button" ng-click="chargeFuel(car, amount)" value="Click here to charge fuel" />
+</div> -->
+          <pre data-line="2, 6"><code class="language-markup">&lt;div&gt;
+  &lt;input type=&quot;button&quot; ng-click=&quot;car.goTo( china)&quot; value=&quot;Go to China&quot;/&gt; 
+  
+  &lt;input type=&quot;text&quot; ng-model=&quot;amount&quot; placeholder=&quot;Fuel to charge&quot; /&gt;
+
+  &lt;input type=&quot;button&quot; ng-click=&quot;car.chargeFuel(amount)&quot; value=&quot;Charge fuel&quot; /&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </section>
+
+      <section>
+        <div class="content">
+          <h2>We can easily do that with Restangular</h2>
+        </div>
+      </section>
+
+      <section data-bespoke-state="code long">
+        <div class="content">
+          <p>The simpler way</p>
+          <pre><code class="language-javascript">Restangular.extendModel('cars', function(car) {
+  car.chargeFuel = function(amount) {
+    car.fuel = car.fuel + 1;
+  }
+
+  // ...
+
+  car.goTo = function(place) {
+    return car.consumeFuel(car.consumptionPerKm * place.distance);
+  }
+
+  return car;
+});</code></pre>
+        </div>
+      </section>
+
+      <section data-bespoke-state="code long">
+        <div class="content">
+          <p>Working with Prototypes</p>
+          <pre><code class="language-javascript">Restangular.extendModel('cars', function(car) {
+  return Car.extend(car);
+});</code></pre>
+          <pre><code class="language-javascript">module.factory('Car', function(Extender) {
+  function Car() {
+
+  }
+
+  Car.prototype.chargeFuel = function(amount) {
+    this.fuel = this.fuel + amount;
+  }
+
+  Car.extend = Extender.for(Car);
+
+  return Car;
+  });</code></pre>
+        </div>
+      </section>
+
+      <section data-bespoke-state="code long">
+        <div class="content">
+          <p>Extender</p>
+          <pre><code class="language-javascript">module.service('Extender', function() {
+
+  this.extendResult = function(result, clazz, /* constructor args*/) {
+
+    var callArgs = arguments;
+    var constructorArgs = Array.prototype.slice.call(callArgs, 2);
+    constructor.apply(val, params);
+
+    var Temp = function(){};
+
+    Temp.prototype = constructor.prototype;
+
+    var inst = new Temp;
+
+    var model = constructor.apply(inst, params);
+
+    angular.extend(model, result);
+    return model;
+  }
+
+  this.processResponse = function(response, constructor) {
+    var __this = this;
+    if (angular.isArray(response)) {
+        var models = [];
+        angular.forEach(response, function(object) {
+            models.push(__this.extendResult(object, constructor));
+        });
+        return angular.extend(response, models);
+    } else {
+        return this.extendResult(jsonResult, constructor);
+    }
+  }
+
+  this.for = function(constructor) {
+    var __this = this;
+    return function(response) {
+      __this.processResponse(response, constructor)
+    };
+  }
+  });</code></pre>
+        </div>
+      </section>
+
+    <section data-bespoke-state="spoiler">
+      <div class="content">
+        
+      </div>
+    </section>
+
+    <section>
+      <div class="content">
+        <div class="byline"></div>
+        <h3>Angular 2.0 is coming</h3>
+        <div class="byline">
+          <div class="classy">
+            so
+          </div>
+        </div>
+        <h3>Restangular 2.0 is coming</h3>
+        <div class="byline"></div>
+      </div>
+    </section>
+
+    <section data-bespoke-state="code long">
+        <div class="content">
+          <p>Restangular 2.0 code</p>
+          <pre><code class="language-javascript">module.factory('Car', function(Extender) {
+  public class Car extend Model {
+    constructor() { 
+      this.currentSpeed = 25;
+    }
+
+    chargeFuel(place){
+        this.fuel = this.fuel + amount;
+    }
+  }
+
+  }
+
+  return Car;
+  });</code></pre>
+  <pre><code class="language-javascript">Restangular.extendModel('cars', Car); //Uses the class</code></pre>
+        </div>
+      </section>
+
+      <section>
+        <div class="content">
+          <div class="byline">
+            <div class="classy">
+              At this point
+            </div>
+          </div>
+          <h3>I was pretty happy</h3>
+          <div class="byline">
+            <div class="classy">
+              BUT
+            </div>
+          </div>
+          <h3>I still had URLs in the FrontEnd</h3>
+        </div>
+      </section>
+
+
       
       <section>
         <div class="content">
@@ -498,41 +712,13 @@ $scope.user.all('cars').getList();</code></pre>
           
           <p>Let's fetch all users</p>
           <pre data-line="2-4"><code class="language-javascript">Restangular.all('users').getList().then(function(users) {
-  // user.self.href = 'http://example.com/users/gonto'
+  // user.self.href is equal to 'http://example.com/users/gonto'
   // This triggers delete to that URL
   users[0].remove()
 });</code></pre>
         </div>
       </section>
       
-      <section>
-        <div class="content">
-          <h2>How about adding my own methods and properties?</h2>
-        </div>
-      </section>
-      
-      <section data-bespoke-state="code">
-        <div class="content">
-          <p>Let's add the methods</p>
-          <pre><code class="language-javascript">Restangular.addElementTransformer('users', false, function(user) {
-  user.addRestangularMethod('ping', 'post', 'do-ping', {'X-App': 'Example'});
-  return user;
-})
-
-// OR
-
-Restangular.extendModel('users', function(user) {
-  user.addRestangularMethod('ping', 'post', 'do-ping', {'X-App': 'Example'});
-  return user;
-});</code></pre>
-          
-          <p>Let's use it</p>
-          <pre><code class="language-javascript">Restangular.allUrl('users').getList().then(function(users) {
-  users[0].ping();
-  users[0].customPUT({message: 'Hey John'}, 'update-message');
-});</code></pre>
-        </div>
-      </section>
       
       <section>
         <div class="content">
@@ -581,6 +767,14 @@ Restangular.setErrorInterceptor(function(response) {
 BondRestangular.one('place', 12).get();</code></pre>
         </div>
       </section>
+
+      <section data-bespoke-state="bond">
+        <div class="content">
+          
+        </div>
+      </section>
+
+
       
       <section>
         <div class="content">
@@ -602,7 +796,7 @@ BondRestangular.one('place', 12).get();</code></pre>
       
       <section>
         <div class="content">
-          <h2>You can run custom operations</h2>
+          <h2>You can run custom operations on methods</h2>
         </div>
       </section>
       
@@ -658,7 +852,7 @@ BondRestangular.one('place', 12).get();</code></pre>
               This has been
             </div>
           </div>
-          <h1>Consuming REST APIs with Restangular</h1>
+          <h1>Models and Rest APIs on AngularJS with Restangular</h1>
           <div class="byline">
             <div class="classy">
               by Martin Gontovnikas
