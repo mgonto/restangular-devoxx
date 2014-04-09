@@ -85,6 +85,13 @@ article.steamclock::before {
   background-image: url("../img/steamclock.jpg");
 }
 
+article.beta::before {
+  -webkit-filter: blur(5.5px) grayscale(0.3) brightness(0.4);
+  -moz-filter: blur(5.5px) grayscale(0.3) brightness(0.4);
+  filter: blur(5.5px) grayscale(0.3) brightness(0.4);
+  background-image: url("../img/beta.jpg");
+}
+
 article.js::before {
   -webkit-filter: blur(2.25px) grayscale(0.3) brightness(0.4);
   -moz-filter: blur(2.25px) grayscale(0.3) brightness(0.4);
