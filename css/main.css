@@ -53,6 +53,7 @@ article::after {
 img {
   display: block;
   margin: 30px auto;
+  width: 100%;
 }
 
 /* Everything else */
