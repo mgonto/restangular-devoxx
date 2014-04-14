@@ -45,7 +45,7 @@ pre[class*="language-"] {
 
 .long :not(pre) > code[class*="language-"], 
 .long pre[class*="language-"] {
-  width: 950px;
+  width: 980px;
 }
 
 .line-highlight {
@@ -185,6 +185,13 @@ article.notcool-joey::before {
   -moz-filter: grayscale(0) brightness(1);
   filter: grayscale(0) brightness(1);
   background-image: url("../img/joey.gif");
+}
+
+article.say-what::before {
+  -webkit-filter: none;
+  -moz-filter: none;
+  filter: none;
+  background-image: url("../img/saywhat.gif");
 }
 
 article.bowling::before {

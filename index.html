@@ -94,12 +94,6 @@
         </div>
       </section>
 
-      <section data-bespoke-state="beta">
-        <div class="content">
-          <h2>This talk is still in BETA</h2>
-        </div>
-      </section>
-
       <section>
         <div class="content">
           <h2>So Let's start</h3>
@@ -291,6 +285,11 @@ var user = User.get({userId:123}, function() {
    firstCar.name = "Honda Fit";
    firstCar.$save();
  });</code></pre>
+        </div>
+      </section>
+
+      <section data-bespoke-state="say-what">
+        <div class="content">
         </div>
       </section>
       
@@ -501,7 +500,7 @@ var user = User.get({userId:123}, function() {
       <section data-bespoke-state="code long">
         <div class="content">
           <pre><code class="language-javascript">Restangular.all('users').one('car', 123).get();
-Restangular.allUrl('users', 'http://example.com/users').all('messages').getList();
+Restangular.allUrl('users', 'http://ex.com/users').all('messages').getList();
 Restangular.one('users', 123).all('cars').getList();
 $scope.user.all('cars').getList();</code></pre>
         </div>
@@ -612,54 +611,6 @@ $scope.user.all('cars').getList();</code></pre>
         </div>
       </section>
 
-      <section data-bespoke-state="code long">
-        <div class="content">
-          <p>Extender</p>
-          <pre><code class="language-javascript">module.service('Extender', function() {
-
-  this.extendResult = function(result, clazz, /* constructor args*/) {
-
-    var callArgs = arguments;
-    var constructorArgs = Array.prototype.slice.call(callArgs, 2);
-    
-    var Temp = function(){};
-    Temp.prototype = constructor.prototype;
-    var inst = new Temp;
-
-    var model = constructor.apply(inst, params);
-
-    angular.extend(model, result);
-    return model;
-  }
-  //...</code></pre>
-        </div>
-      </section>
-
-      <section data-bespoke-state="code long">
-        <div class="content">
-          <p>Extender Cont</p>
-          <pre><code class="language-javascript">this.processResponse = function(response, constructor) {
-  var __this = this;
-  if (angular.isArray(response)) {
-      var models = [];
-      angular.forEach(response, function(object) {
-          models.push(__this.extendResult(object, constructor));
-      });
-      return angular.extend(response, models);
-  } else {
-      return this.extendResult(jsonResult, constructor);
-  }
-}
-
-this.for = function(constructor) {
-  var __this = this;
-  return function(response) {
-    __this.processResponse(response, constructor)
-  };
-}</code></pre>
-      </div>
-    </section>
-
     <section data-bespoke-state="spoiler">
       <div class="content">
         
@@ -681,9 +632,53 @@ this.for = function(constructor) {
     </section>
 
     <section data-bespoke-state="code long">
-        <div class="content">
+        <div class="content nofade">
           <p>Restangular 2.0 code</p>
-          <pre><code class="language-javascript">module.factory('Car', function(Extender) {
+          <pre data-line="2"><code class="language-javascript">module.factory('Car', function(Extender) {
+  public class Car extend Model {
+    constructor() {
+      this.currentSpeed = 25;
+    }
+
+    chargeFuel(place){
+        this.fuel = this.fuel + amount;
+    }
+  }
+
+  }
+
+  return Car;
+  });</code></pre>
+  <pre><code class="language-javascript">Restangular.extendModel('cars', Car); //Uses the class</code></pre>
+        </div>
+      </section>
+
+      <section data-bespoke-state="code long">
+        <div class="content nofade">
+          <p>Restangular 2.0 code</p>
+          <pre data-line="3-5"><code class="language-javascript">module.factory('Car', function(Extender) {
+  public class Car extend Model {
+    constructor() {
+      this.currentSpeed = 25;
+    }
+
+    chargeFuel(place){
+        this.fuel = this.fuel + amount;
+    }
+  }
+
+  }
+
+  return Car;
+  });</code></pre>
+  <pre><code class="language-javascript">Restangular.extendModel('cars', Car); //Uses the class</code></pre>
+        </div>
+      </section>
+
+      <section data-bespoke-state="code long">
+        <div class="content nofade">
+          <p>Restangular 2.0 code</p>
+          <pre data-line="7-9"><code class="language-javascript">module.factory('Car', function(Extender) {
   public class Car extend Model {
     constructor() { 
       this.currentSpeed = 25;
@@ -716,6 +711,7 @@ this.for = function(constructor) {
             </div>
           </div>
           <h3>I still had URLs in the FrontEnd</h3>
+          <div class="unbrokenline"></div>
         </div>
       </section>
 
@@ -723,23 +719,81 @@ this.for = function(constructor) {
       
       <section>
         <div class="content">
-          <h2>What if the element has a link to self?</h2>
+          <h2>I started thinking about HyperMedia and HATEOAS</h2>
         </div>
       </section>
+
+
       
-      <section data-bespoke-state="code">
+      <section data-bespoke-state="code long">
         <div class="content nofade">
           <p>First we configure it</p>
-          <pre><code class="language-javascript">RestangularProvider.setRestangularFields({
+          <pre data-line="2"><code class="language-javascript">RestangularProvider.setRestangularFields({
   selfLink: 'self.href'
 })</code></pre>
-          
-          <p>Let's fetch all users</p>
-          <pre data-line="2-4"><code class="language-javascript">Restangular.all('users').getList().then(function(users) {
+
+          <p>Let's fetch the user and it's cars</p>
+          <pre><code class="language-javascript">Restangular.all('users').getList().then(function(users) {
   // user.self.href is equal to 'http://example.com/users/gonto'
   // This triggers delete to that URL
   users[0].remove()
 });</code></pre>
+
+<pre><code class="language-javascript">// Uses href for car relation
+$scope.user.allUrl('cars', $scope.user.cars.href)
+  .getList().then(function(cars) {
+    $scope.car.name = "Fit";
+    // Uses car.self.href
+    $scope.car.put();
+  });</code></pre>
+        </div>
+      </section>
+
+      <section data-bespoke-state="code long">
+        <div class="content nofade">
+          <p>First we configure it</p>
+          <pre data-line=""><code class="language-javascript">RestangularProvider.setRestangularFields({
+  selfLink: 'self.href'
+})</code></pre>
+
+          <p>Let's fetch the user and it's cars</p>
+          <pre data-line="1-4"><code class="language-javascript">Restangular.all('users').getList().then(function(users) {
+  // user.self.href is equal to 'http://example.com/users/gonto'
+  // This triggers delete to that URL
+  users[0].remove()
+});</code></pre>
+
+<pre><code class="language-javascript">// Uses href for car relation
+$scope.user.allUrl('cars', $scope.user.cars.href)
+  .getList().then(function(cars) {
+    $scope.car.name = "Fit";
+    // Uses car.self.href
+    $scope.car.put();
+  });</code></pre>
+        </div>
+      </section>
+
+      <section data-bespoke-state="code long">
+        <div class="content nofade">
+          <p>First we configure it</p>
+          <pre data-line=""><code class="language-javascript">RestangularProvider.setRestangularFields({
+  selfLink: 'self.href'
+})</code></pre>
+          
+          <p>Let's fetch the user and it's cars</p>
+          <pre data-line=""><code class="language-javascript">Restangular.all('users').getList().then(function(users) {
+  // user.self.href is equal to 'http://example.com/users/gonto'
+  // This triggers delete to that URL
+  users[0].remove()
+});</code></pre>
+
+<pre data-line="2-3"><code class="language-javascript">// Uses href for car relation
+$scope.user.allUrl('cars', $scope.user.cars.href)
+  .getList().then(function(cars) {
+    $scope.car.name = "Fit";
+    // Uses car.self.href
+    $scope.car.put();
+  });</code></pre>
         </div>
       </section>
       
@@ -750,20 +804,20 @@ this.for = function(constructor) {
         </div>
       </section>
       
-      <section data-bespoke-state="code">
+      <section data-bespoke-state="code long">
         <div class="content">
-          <pre><code class="language-javascript">Restangular.setResponseInterceptor(function(data, operation, what) {
+          <pre><code class="language-javascript">Restangular.setRequestInterceptor(function(elem) {
+  startLoading();
+  delete elem.extraInfo;
+  return elem;
+});
+
+Restangular.setResponseInterceptor(function(data, operation, what) {
   stopLoading();
   if (operation == 'getList') {
     return data[what];
   }
   return data;
-});
-
-Restangular.setRequestInterceptor(function(elem) {
-  startLoading();
-  delete elem.extraInfo;
-  return elem;
 });
 
 Restangular.setErrorInterceptor(function(response) {
@@ -877,6 +931,11 @@ BondRestangular.one('place', 12).get();</code></pre>
 
       <section data-bespoke-state="final" class="intro">
         <div class="content">
+          <div class="byline">
+            <div class="classy">
+              this was
+            </div>
+          </div>
           <h1>Models and Rest APIs on AngularJS with Restangular</h1>
           <div class="byline">
             <div class="classy">
@@ -891,6 +950,60 @@ BondRestangular.one('place', 12).get();</code></pre>
           </div>
         </div>
       </section>
+
+      <section>
+        <div class="content">
+          <h2>Apendix</h2>
+        </div>
+      </section>
+
+      <section data-bespoke-state="code long">
+        <div class="content">
+          <p>Extender</p>
+          <pre><code class="language-javascript">module.service('Extender', function() {
+
+  this.extendResult = function(result, clazz, /* constructor args*/) {
+
+    var callArgs = arguments;
+    var constructorArgs = Array.prototype.slice.call(callArgs, 2);
+
+    var Temp = function(){};
+    Temp.prototype = constructor.prototype;
+    var inst = new Temp;
+
+    var model = constructor.apply(inst, params);
+
+    angular.extend(model, result);
+    return model;
+  }
+  //...</code></pre>
+        </div>
+      </section>
+
+      <section data-bespoke-state="code long">
+        <div class="content">
+          <p>Extender Cont</p>
+          <pre><code class="language-javascript">this.processResponse = function(response, constructor) {
+  var __this = this;
+  if (angular.isArray(response)) {
+      var models = [];
+      angular.forEach(response, function(object) {
+          models.push(__this.extendResult(object, constructor));
+      });
+      return angular.extend(response, models);
+  } else {
+      return this.extendResult(jsonResult, constructor);
+  }
+}
+
+this.for = function(constructor) {
+  var __this = this;
+  return function(response) {
+    __this.processResponse(response, constructor)
+  };
+}</code></pre>
+      </div>
+    </section>
 
     </article>
     <script type="text/javascript">
