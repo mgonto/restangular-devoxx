@@ -194,6 +194,19 @@ article.say-what::before {
   background-image: url("../img/saywhat.gif");
 }
 
+article.hmedia::before {
+  -webkit-filter: none;
+  -moz-filter: none;
+  filter: none;
+  background-size: contain;
+  background-image: url("../img/model.png");
+
+}
+
+article.hmedia {
+  background-color: white;
+}
+
 article.bowling::before {
   -webkit-filter: grayscale(0) brightness(1);
   -moz-filter: grayscale(0) brightness(1);
